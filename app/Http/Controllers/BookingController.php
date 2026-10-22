@@ -319,11 +319,10 @@ else{
         $checkForExisting = booking::where(
             [
               'theatre_id' => $request->theatre_id,
-              'slot_id' => $request->slot_id,
-              'booking_status' => '1',
+            'slot_id' => $request->slot_id,
               'date' => date('Y-m-d', strtotime($request->calender))
             ]
-          )->whereNotIn('customer_id', [$request->customer_id])->get();
+        )->whereIn('booking_status', Helper::BOOKING_STATUS_CHECK_ARRAY)->whereNotIn('customer_id', [$request->customer_id])->get();
 
         if (isset($checkForExisting) && count($checkForExisting) > 0) {
           return response()->json(['success' => false, 'errMsg' => 'Slot is already booked, Please select other available slot and book']);
@@ -389,7 +388,7 @@ else{
             'response_msg' => 'Payment Pending',
           ];
 
-          $payment_id = Payment::create($paymentData)->id;
+          $payment_id = Payment::create($paymentData)->payment_id;
         }
 
         if ($booking_id != NULL && $payment_id != NULL) {
@@ -398,6 +397,8 @@ else{
           $subTotalAmount = $request->total;
           $paybleAmount = $request->advance;
           $paybleAmountInPaise = $paybleAmount * 100;
+
+          $this->pckg->updateBilling($booking_id);
 
           $customer = customer::find($request->customer_id);
 
@@ -495,6 +496,8 @@ else{
             ];
             booking::where('id', $booking_id)->update($bookingUpdate);
 
+            $this->pckg->updateBilling($booking_id);
+
             session(['customer_id' => $request->customer_id, 'is_paid' => 1, "paid_amount" => $amountPaid]);
 
             try {
@@ -502,7 +505,7 @@ else{
 
               $htmlData = view('emails.admin_email', compact('book'))->render();
 
-              $this->helper->sendAdminMail(array($book->theatre->branchs->email), null, $htmlData);
+              $this->helper->sendAdminMail(array($book->theatre->branchs->email), $htmlData);
             } catch (Exception $e) {
             }
           }

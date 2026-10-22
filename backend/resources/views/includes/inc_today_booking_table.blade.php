@@ -1,137 +1,133 @@
+@if(isset($isMailTemplate) && $isMailTemplate == 1)
 <div class="table-responsive">
-  @if(isset($isMailTemplate) && $isMailTemplate == 1)
-  <br />
-  <div><b>Booking Details From - {{ $dateRange ?? '' }}</b></div>
-  <br />
-  <table border="1" style="border-collapse: collapse; border-color: #D3D3D3; border-width:1px;" cellspacing="0" cellpadding="8" width="100%">
-    @else
-    <table id="myTable" style="margin:20px auto" class="table table-striped table-responsive table-sm">
-      @endif
-      <thead>
-        <tr>
-          <th width="1%">#</th>
-          <th width="20%">Booking Details</th>
-          <th width="18%">Theatre Details</th>
-          <th width="18%">Cake</th>
-          <th width="9%">Dates</th>
-          <th width="9%">Slot</th>
-          <th width="12%">Amount</th>
-          <th>Add-Ons</th>
-          <th>Booking</th>
-          @if(isset($isMailTemplate) && $isMailTemplate == 1)
-          @else
-          <th width="10%">Remarks</th>
-          @endif
-        </tr>
-      </thead>
-      <tbody>
-        @foreach($booking as $book)
-        <tr>
-          <td>{{ $loop->iteration }}</td>
-          <td>
-            {{$book->customer->customer_name ?? ''}}<br>
-            <a href="Https://wa.me/+91{{$book->customer->phone ?? ''}}">
-              {{$book->customer->phone ?? ''}}
-            </a>
-            
-             </td>
-          <!--Theatre Start -->
-          <td>
-            @if($book->package != null)
-            {{ $book->package->package_name ?? '' }} Package ({{ $book->package->package_amount ?? '' }})<br>
-            @else
-            {{ $book->theatre->name ?? 'NA' }} ({{ $book->theatre->price ?? '' }})<br>
-            <span class="fs-8"> {{$book->decoration->name ?? 'No Decoration'}} </span><br>
-            @endif
-            
-          </td>
-          <!--Theatre Emd -->
-          <td>
-              
-            <span class="fs-8"></span>{{$book->cake->cakename ?? ''}} ({{ $book->cake_extra_amount }})</br>
-            <span class="fs-8">cakeMsg:</span>{{ $book->name_on_cake }}  
-            </br>
-            Led  @if($book->partner_name != null)
-            <span class="fs-8"> 1 :</span>{{$book->partner_name}}
-            @endif
-            @if($book->your_name != null)
-            <span class="fs-8"> 2 :</span>  | {{$book->your_name}}
-            @endif
-            
-          </td>
-          
-          
-          <td>
-           {{\Carbon\Carbon::createFromTimestamp(strtotime($book->date))->format('d-M-y')}}
-            </td>
+
+<br/>
+	<div>
+		<b>Booking Details From - {{ $dateRange ?? '' }}</b>
+	</div>
+	<br/>
+	<table border="1" style="border-collapse: collapse; border-color: #D3D3D3; border-width:1px;" cellspacing="0" cellpadding="8" width="100%">
+@else
+
+<table id="myTable" style="margin:20px auto" class="table table-striped table-responsive table-sm">
+@endif
+<thead>
+				<tr>
+					<th>#</th>
+					<th>package/Theatre</th>
+					<th>BasePrice</th>
+					<th>sub_total</th>
+					<th>Cake</th>
+					<th>Total</th>
+					<th>Advance</th>
+					<th>PaidTo</th>
+					<th>Collected</th>
+					<th>Amount</th>
+					<th>Balance</th>
+					<th>Addons</th>
+					<th>Discount</th>
+					<th>Food</th>
+					<th>Cold Drink</th>
+					<th>250 ml</th>
+					<th>500 ml</th>
+					<th>1l water</th>
+					<th>Xtras</th>
+					<th>promo </th>
+				</tr>
+			</thead>
+			<tbody>
+@php
+$totalAmounts = 0; 
+
+$AdvanceAmounts = 0; 
+$CollectedAmounts = 0;
+$DiscountAmounts = 0;
+$pendingAmounts = 0;
+$amountreciveds = 0;
+
+@endphp
+
+@foreach($booking->whereIn('booking_status', [1, 7] ) as $book)
+
+@php
+    $discountAmount = 0;
     
-        <td>    
-            @if(isset($book->new_starttime))
-                <span class="text-success">{{$book->new_starttime}} - {{$book-> new_endttime}}</span>
-            @else
-                {{$book->slot->start_time}} - {{$book->slot->end_time}}
-            @endif
-        
-         
-          </td>
-          <td>
-            <div id="table-sparkline-1">
-              Total : &#8377;{{$book->final_price+ $book->payment->amount ?? 0 }}<br>
-              <span class="fs-8">
-                Advance:&#8377;{{$book->payment->amount ?? 0}}
-                <br>
-                Balance: &#8377;{{$book->final_price}}<br>
-              </span>
-          </td>
-          <td>
-            @foreach($book->addons as $add)
-            @if(($add->amount ?? 0) > 0)
-            <span class="fs-8">
-              {{$add->addon->name}}
-              (<b>{{ $add->amount }}</b>) |
-            </span>
-            @endif
-            @endforeach
-          </td>
-          <td>
-            <div id="table-sparkline-1"> 
-              @if(isset($book->payment_confirmed_by))
-              @if($book->payment_confirmed_by == 1)
-              Krishna
-              @elseif($book->payment_confirmed_by == 3)
-              Supriya
-              @elseif($book->payment_confirmed_by == 4)
-              Kausik
-              @elseif($book->payment_confirmed_by == 5)
-              Mahesh
-              else
-              Siddu
-              @endif
-              @else
-              Web
-              @endif
-            </div>
-            #ppl:{{$book->No_people}}
-            <a href="https://partyadda.com/backend/public/admin/booking/invoice/{{$book ->id}}" target="_blank" rel="noopener noreferrer">({{$book ->id}})</a>
-          </td>
-          
-          @if(isset($isMailTemplate) && $isMailTemplate == 1)
-          @else
-          <td>
-            @if(isset($book->payment_screenshot))
-            </br>
-            <span class="fs-8 text-bg-info" style="padding-left: 6px; padding-right: 6px; border-radius: 4px">
-              {{$book->payment_screenshot}}
-            </span>
-            @endif
-            @if(isset($book->discountid))
-            </br>
-            DiscountCode: {{$book->discountid}}
-            @endif 
-          </td>
-          @endif
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
-</div> <!-- /.table-responsive -->
+    $cakeAmount = $book->cake_amount + $book->cake_extra_amount ?? 0;
+    $discountAmount = $book->discount_amount ?? 0;
+    
+    $totalExpAmount = $book->billing->comp_total_amount + $cakeAmount - $discountAmount;
+    $advanceAmount =   $book->payment?->amount ?? 0;
+    $collectedAmount = $book->billing_paid_amount; 
+    
+    $amountreceived = $advanceAmount + $collectedAmount;
+    $pendingAmount = $totalExpAmount - $amountreceived;
+    
+     
+    $AdvanceAmounts = $AdvanceAmounts + $advanceAmount; 
+    $amountreciveds = $amountreciveds + $amountreceived;
+    $CollectedAmounts = $CollectedAmounts + $collectedAmount;
+    
+    $DiscountAmounts = $DiscountAmounts + $discountAmount;
+    $totalAmounts = $totalAmounts + $totalExpAmount;
+    $pendingAmounts  = $pendingAmounts + $pendingAmount 
+    
+@endphp
+<tr>
+<td>
+	<a href="https://partyadda.com/backend/public/admin/booking/invoice/{{$book ->id}}" target="_blank" rel="noopener noreferrer">({{$book ->id}})
+</a>
+{{ $loop->iteration }} 
+</td>
+					<td>
+@if($book->package != null)
+{{ $book->package->package_name ?? '' }} 
+@else
+{{ $book->theatre->name ?? 'NA' }} 
+@endif
+</td>
+					<td>{{$book->billing->base_amount}}</td>
+					<td>{{$book->billing->comp_total_amount}}</td>
+					<td>{{$cakeAmount}}</td>
+					<td>{{$totalExpAmount}}</td>
+					<td>{{$advanceAmount}}</td>
+					<td>{{$book->payment_reference}}</td>
+					<td>{{$book->amount_confirmed_by}}</td>
+					<td>{{$book->billing_paid_amount}}</td>
+					<td>{{$pendingAmount}}</td>	
+					<td>{{$book->billing->addon_total_amount}}</td>
+					<td>{{$book->discount_amount + $book->billing->special_discount_amount ?? 0}}</td>
+					<td>{{$book->billing-> food_total_amount}}</td>
+					<td>{{$book->billing-> cold_drink_qty}}</td>
+					<td>{{$book->billing-> water_bottle_250_qty}}</td>
+					<td>{{$book->billing-> water_bottle_500_qty}}</td>
+					<td>{{$book->billing-> water_bottle_1000_qty}}</td>
+					<td>{{$book->billing-> extra_charge_amount}}</td>
+@if(isset($isMailTemplate) && $isMailTemplate == 1)
+@else
+<td>{{$book->promocode ?? '' }}</td>
+@endif
+</tr>
+@endforeach
+</tbody>
+		</table>
+
+<table border="1" style="border-collapse: collapse; border-color: #D3D3D3; border-width:1px;" cellspacing="0" cellpadding="8" width="100%">
+    <tr>
+        <td>Advance Amount +</td>
+        <td>Amount Collected =</td>
+        <td>Amount received - </td>
+        <td>Total Amounts =</td>
+        <td>Pending Amount  </td>
+        <td>Discount Amount  </td>
+    </tr>
+      <tr>
+        <td>{{ $AdvanceAmounts }}</td>
+        <td>{{  $CollectedAmounts }}</td>
+        <td> {{  $amountreciveds }} </td>
+        <td> {{   $totalAmounts }}</td>
+        <td>{{ $pendingAmounts }}</td>
+        <td> {{ $DiscountAmounts }} </td>
+    </tr>
+</table>
+	</div>
+	<!-- /.table-responsive -->

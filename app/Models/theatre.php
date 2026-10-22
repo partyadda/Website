@@ -24,12 +24,17 @@ class theatre extends Model
     {
         return $this->belongsTo(branch::class, 'branch_id');   
     }
-    // public function slots()
-    // {
-    //     return $this->belongsToMany(slot::class, 'theatre_slot','slot_id');
-    // }
-    
-     public function slots()
+  // public function slots()
+  // {
+  //     return $this->belongsToMany(slot::class, 'theatre_slot','slot_id');
+  // }
+
+  public function branch_data()
+  {
+    return $this->belongsTo(branch::class, 'branch_id');
+  }
+
+  public function slots()
     {
         return $this->belongsToMany(slot::class, 'theatre_slot', 'theatre_id', 'slot_id');
     }

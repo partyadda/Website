@@ -58,9 +58,11 @@ class homeController extends Controller
   public function index()
   {
     $sortedBranchIds = session('branch_ids', []);
+    
     if ($sortedBranchIds == null) {
       return redirect()->route('index');
     } else {
+  
       $booking  = booking::count('id');
       $theatre = theatre::count('id');
       $branch = branch::count('id');
@@ -69,6 +71,7 @@ class homeController extends Controller
       $decoration = decoration::count('id');
       $occasion = occasion::count('id');
       $total_guest = booking::sum('No_people');
+      
       $theatreWithMaxBookings = booking::join('theatre', 'booking.theatre_id', '=', 'theatre.id')
         ->select('theatre.name', DB::raw('count(booking.id) as total_bookings'))
         ->groupBy('theatre.name')
@@ -94,12 +97,15 @@ class homeController extends Controller
         ->groupBy('theatre.name')
         ->orderBy('total_bookings', 'desc')
         ->first();
+        
+        
       $sortedBranchIds = session('branch_ids', []);
       // dd($sortedBranchIds[0]);
       $branch_bk = branch::select('branch_name', 'business_name', 'email', 'contactnumber', 'advance_amount')->where('id', $sortedBranchIds[0])->first();
+      
       $booking = Booking::with(['customer', 'theatre', 'cake', 'slot', 'decoration', 'addons.addon'])
         ->orderBy('id', 'desc')  // Ordering by 'id' in descending order
-        ->take(10)  // Limit the results to 10
+        ->take(20)  // Limit the results to 10
         ->get();
 
       // Remove duplicate addons from each booking
@@ -112,6 +118,12 @@ class homeController extends Controller
       $isDashboard = 1;
 
       return view('dashboard', compact('booking', 'theatre', 'branch', 'booking_sum', 'cake', 'decoration', 'occasion', 'total_guest', 'theatreWithMaxBookings', 'theatreWithMaxRevenue', 'theatreWithMaxCustomer', 'theatreWithLowserCustomer', 'booking', 'branch_bk', 'isDashboard'));
+      
+    
+  /*      return view('dashboard', compact('booking', 'theatre', 'branch', 'booking_sum', 'cake', 'decoration', 'occasion',
+        //'total_guest', 'theatreWithMaxBookings', 'theatreWithMaxRevenue', 'theatreWithMaxCustomer', 'theatreWithLowserCustomer',        'booking', 'branch_bk', 'isDashboard'));
+    */  
+      
     }
   }
 

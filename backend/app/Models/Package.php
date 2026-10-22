@@ -9,6 +9,7 @@ class Package extends Model
 {
   protected $table = 'package';
 
+  protected $guarded = ['id'];
   protected $hidden = ['created_at', 'updated_at'];
 
   public function branch()
@@ -28,6 +29,8 @@ class Package extends Model
 
   public function package_theaters()
   {
+    //return $this->hasMany(PackageTheatre::class, 'package_id', 'id')->with('theatre')->where('active', 1)->orderBy('sequence');
+    
     return $this->hasMany(PackageTheatre::class, 'package_id', 'id')->with('theatre')->where('active', 1)->orderBy('sequence');
   }
 

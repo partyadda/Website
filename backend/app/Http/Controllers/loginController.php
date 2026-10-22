@@ -54,7 +54,7 @@ class loginController extends Controller
         sort($branchIds);
         session(['branch_ids' => $branchIds]);
 
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended('/admin/booking');
         }
         
         // $credentials = $request->only('email', 'password');

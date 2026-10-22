@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helper\Helper;
 use App\Models\branch;
 use App\Models\booking;
 use App\Models\theatre;
@@ -22,12 +23,13 @@ class AdminBookingSlotsRepo {
 
   public function getAllTheatres($branchId)
   {
-    return theatre::with(['packages'])->where(["branch_id" => $branchId])->get()->makeHidden(['description','long_description','short_description']);
+    return theatre::with(['packages'])->whereIn('branch_id', [1, 2])->get()->makeHidden(['description','long_description','short_description']);
   }
+
 
   public function getPackgeById($id)
   {
-    return Package::with(['branch', 'theatre', 'decoration', 'package_cakes', 'package_addons'])->find($id)->makeHidden(['long_desc']);
+    return Package::with(['branch', 'theatre', 'decoration', 'package_cakes', 'package_decorations', 'package_addons'])->find($id)->makeHidden(['long_desc']);
   }
 
   public function geOnlyPackgeById($id)
@@ -48,7 +50,11 @@ class AdminBookingSlotsRepo {
 
   public function isSlotAvailable($theatre_id, $slot_id, $slot_start_time, $selected_date)
   {
-    $booking = booking::where([['theatre_id', '=', $theatre_id], ['slot_id', '=', $slot_id], ['booking_status', '=', '1'], ['date', '=', $selected_date]])->get();
+    $booking = booking::where([
+      ['theatre_id', '=', $theatre_id],
+      ['slot_id', '=', $slot_id],
+      ['date', '=', $selected_date]
+    ])->whereIn('booking_status', Helper::BOOKING_STATUS_CHECK_ARRAY)->get();
 
     $isSlotBookedOrLapsed = 0;
 
@@ -86,5 +92,15 @@ class AdminBookingSlotsRepo {
   public function getPackageAddons($idArray)
   {
     return PackageAddOns::whereIn("id", $idArray)->get();
+  }
+
+  public function getBooking(int $bookingId)
+  {
+    return booking::find($bookingId);
+  }
+
+  public function updateBooking(int $bookingId, array $data)
+  {
+    return booking::find($bookingId)->update($data);
   }
 }

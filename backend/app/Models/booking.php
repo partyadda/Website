@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\payment;
+use App\Models\BookingBilling;
 
 class booking extends Model
 {
@@ -48,5 +49,10 @@ class booking extends Model
   public function package()
   {
     return $this->belongsTo(Package::class, 'package_id', 'id');
+  }
+
+  public function billing()
+  {
+    return $this->hasOne(BookingBilling::class, 'booking_id');
   }
 }

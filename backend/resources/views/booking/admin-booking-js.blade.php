@@ -56,7 +56,7 @@
 
     function handleBookingSummary() {
 
-      var baseAmount = parseInt($('#theatre_amount_summary').text());
+      var baseAmount = parseInt($('#base_amount').val()); //parseInt($('#theatre_amount_summary').text());
       var discountAmount = 0;
       var extraPersonAmount = 0;
       var decorationAmount = 0;
@@ -184,8 +184,8 @@
       // Remove any non-digit characters
       this.value = this.value.replace(/\D/g, '');
       // Limit to 10 digits
-      if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
+      if (this.value.length > 13) {
+        this.value = this.value.slice(0, 13);
       }
     });
 
@@ -241,6 +241,7 @@
           "_token": '{{ csrf_token() }}'
           , "theatre_id": $('#theater_id').val()
           , "selected_date": $('#admin_booking_date').val()
+          , "booking_id": $('#booking_id').val()
         }
       };
 

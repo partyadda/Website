@@ -8,7 +8,7 @@
     <!--begin::Row-->
     <div class="row">
       <div class="col-sm-6">
-        <h3 class="mb-0">Booking Details</h3>
+        <h3 class="mb-0">Booking Detail e</h3>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
@@ -49,9 +49,14 @@
               </form>
             </div>
             
-          </div> <!-- /.card-header -->
-          <div class="card-body">
             
+          </div> <!-- /.card-header -->
+          
+         <!--          <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FKolkata&showCalendars=0&src=NTY5YTQzZGZjNGE1MWUxYmFhNDQ2MDlhODgzZjllOGU2YTA3ZGY1ODBhMTVlYzgzMGRlOTRjZjYzYzI0NmE0ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23f4511e" style="border:solid 1px #777" height="600" frameborder="0" scrolling="no"></iframe>
+         -->
+         
+          
+          <div class="card-body">
             @include('includes.inc_today_booking_table')
 
           </div> <!-- /.card-body -->

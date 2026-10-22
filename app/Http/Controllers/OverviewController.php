@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\sendmail;
@@ -44,6 +45,7 @@ class overviewController extends Controller
             $customer_save->customer_name = $request->Booking_Name;
             $customer_save->email = $request->email;
             $customer_save->phone =$request->number;
+            $customer_save->wherefrom = 'Online';
             $customer_save->referred_by = $request->ref_by;
             $customer_save->save();
       //$customer_show = customer::select('id')->where('phone',$request->number)->where('email',$request->email)->first();
@@ -78,11 +80,11 @@ class overviewController extends Controller
     $theatre_id = $request->theatre_id;
     // print_r($date_current);
     // $booking = Booking::where('date','=',$date_current) ->pluck('slot');
-    $booking = slot::from('slot as sl')->join('booking as bk', 'sl.id', '=', 'bk.slot_id')->where([['bk.date', '=', $date_current], ['bk.booking_status', '=', 1], ['theatre_id', '=', $theatre_id]])
-          ->select(DB::raw("CONCAT(DATE_FORMAT(sl.start_time, '%h:%i %p'), ' - ', DATE_FORMAT(sl.end_time, '%h:%i %p')) as time_range"))->pluck('time_range');
+    $booking = slot::from('slot as sl')->join('booking as bk', 'sl.id', '=', 'bk.slot_id')->where([['bk.date', '=', $date_current], ['theatre_id', '=', $theatre_id]])
+      ->select(DB::raw("CONCAT(DATE_FORMAT(sl.start_time, '%h:%i %p'), ' - ', DATE_FORMAT(sl.end_time, '%h:%i %p')) as time_range"))->whereIn('bk.booking_status', Helper::BOOKING_STATUS_CHECK_ARRAY)->pluck('time_range');
 
-    $booking24 = slot::from('slot as sl')->join('booking as bk', 'sl.id', '=', 'bk.slot_id')->where([['bk.date', '=', $date_current], ['bk.booking_status', '=', 1], ['theatre_id', '=', $theatre_id]])
-          ->select(DB::raw("CONCAT(DATE_FORMAT(sl.start_time, '%H:%i'), ' - ', DATE_FORMAT(sl.end_time, '%H:%i')) as time_range"))->pluck('time_range');
+    $booking24 = slot::from('slot as sl')->join('booking as bk', 'sl.id', '=', 'bk.slot_id')->where([['bk.date', '=', $date_current], ['theatre_id', '=', $theatre_id]])
+      ->select(DB::raw("CONCAT(DATE_FORMAT(sl.start_time, '%H:%i'), ' - ', DATE_FORMAT(sl.end_time, '%H:%i')) as time_range"))->whereIn('bk.booking_status', Helper::BOOKING_STATUS_CHECK_ARRAY)->pluck('time_range');
          $bookedCount = $booking->count();
         // print_r($booking);
         // $arr = array();

@@ -1,6 +1,8 @@
 @extends('includes.layout')
-@section('title','Select Cake')
 
+@section('title','Private Theaters for Celebration and Surprises')
+@section('keyword','private theater, private theater in Marathahalli, private movie theater, mini theater, mini party hall, party venue, celebration venue, birthday celebration, birthday parties, surprise birthday celebration, kids birthday party, first birthday, children’s birthday, baby birthday venues, baby shower halls, bride-to-be celebration, bachelorette party, mom-to-be celebration, hosting baby birthday, small get-togethers, group party, place for celebration, party venues and ideas, budget-friendly celebration, birthday places for couples, binge watch party, fun places in Bangalore')
+@section('description','PartyAdda offers private theatre celebrations in Bangalore with customizable packages for birthdays, bride to be, anniversaries, baby shower, mom to be,couples, family gatherings, and special events—fun, memorable, and affordable.')
 @section('content')
 
  <style>
@@ -35,13 +37,16 @@
             </div>
 <label id="check_error" class="error-label"></label>
             <!--  -->
-            <form class="mb-5" name="personalinfo">
+            <form class="mb-14" name="personalinfo">
                 
                 <input type="hidden" name="cake_id" id="cake_id" value="">
 
-                <div class="row gy-4 row_div">
+                <div class="row row_div">
                    
                     @foreach($cakesWithAssets as $ck)
+                    
+                    @if($ck->id != 6 )
+                    
                     <div class="col-6 col-lg-3 main_div" id="div1">
                         <label class="select-option text-center">
                            
@@ -50,13 +55,13 @@
                             <div class="frame"><img src="{{URL::asset('assets/img/'.$asset->foldername.'/'.$asset->filename) }}"
                                     class="img-fluid" style="width: 250px;height: 150px;" /><i class=""></i></div>
                             
-                            <p class="fw-bold mb-0"> {{$asset->description}} </p>
+                            <p class="fw-bold mb-0"> {{$asset->description}} ({{$ck->id}}) </p>
                             <div class="price_div">₹ {{$ck->pivot->price}}</div>
                             @endforeach
-                                     
-                            
                         </label>
                     </div>
+                    @endif
+                    
                     @endforeach
                     
                 </div>
@@ -70,6 +75,7 @@
                      <div class="mt-5 fs-14">Note: The prices are for a 500-gram eggless cake </br>The cake images shown are for illustrative purposes only; the actual cakes may differ</div>
             </form>
         </div>
+    
         <div class="col-md-5">
             <div class="summary-content p-3  p-md-4 find-us mb-4 h-100">
                 <div class="fs-5 fw-bold mb-4">Booking Summary</div>
@@ -81,7 +87,7 @@
                 </div>
                 <div class="d-flex mb-2" id="extra_person_div"> 
                     <!--<span>Extra Person</span><b class="ms-auto extra"></b>-->
-                    <span style="margin-right: 10px;">Extra Person Charges</span> <span class="extra_count"></span><b class="ms-auto extra"></b>
+                    <span style="margin-right: 10px;">Extra Person Fee</span> <span class="extra_count"></span><b class="ms-auto extra"></b>
                 </div>
                 <!--<div class="d-flex mb-2">-->
                 <!--    <span>Birthday Decoration</span><b class="ms-auto decoration"></b>-->
@@ -110,12 +116,13 @@
                     <span>Balance Amount<div class="fs-11"></div></span>
                     <b class="ms-auto balance"></b>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-md-12">
                     <a href="javascript:void(0)"
                         class="btn button-custom rounded-pill px-3 px-lg-12 px-xxl-5 next_ad_on">Next Special Ad-Ons</a>
                 </div>
             </div>
         </div>
+  
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

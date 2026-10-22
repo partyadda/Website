@@ -9,7 +9,8 @@ class booking_addon extends Model
 {
     // use HasFactory;
     protected $table = "booking_addon";
-    
+      protected $guarded = ['id'];
+
     
     public function addon()
     {

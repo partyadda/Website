@@ -36,15 +36,15 @@
 					   </div>
 					   <!-- /.card-header -->
 					<div class="card-body">
-					   <table id="myTable" style="margin:20px auto" class="table table-striped" >
+					   <table id="myTable" style="margin:5px auto" class="table table-striped" >
 						  <thead>
 							 <tr>
-								<th>Sl.No</th>
-								<th>Customer Name</th>
-								<th>Customer Details</th>
-								<th>Category</th>
-								<th>Referred By & From</th>
-								<th>Action</th>
+								<th width="3%">Sl.No</th>
+								<th>Name</th>
+								<th width="10%">Phone</th>
+								<th width="7%">Where From</th>
+								<th width="10%">Since</th>
+								<th width="10%">Action</th>
 							 </tr>
 						  </thead>
 						  <tbody>
@@ -53,25 +53,28 @@
 						      @endphp
 						      @foreach($customers as $cust)
 							<tr class="align-middle">
-								<td>{{++$no}}</td>
-								<td>{{$cust->customer_name}}<br>Since : <span class="badge text-bg-success">{{$cust->created_at}}</span></td>
-								<td>{{$cust->email}}<br>{{$cust->phone}}</td>
-								<td>{{$cust->category}}</td>
-								<td>{{$cust->referred_by}} @if($cust->wherefrom)  & {{$cust->wherefrom}} @endif</td>
-								<td>		
-										<a href="{{route('admin.customer_bookings',$cust->id)}}"  class="btn btn-primary"  id="services" ><i class="bi bi-files"></i> View Bookings</a>
+								<td>{{$cust->id}}</td>
+								<td>{{$cust->customer_name}}</td>
+								<td>{{$cust->phone}}</td>
+								<td>@if($cust->wherefrom) {{$cust->wherefrom}} @endif</td>
+								<td><span class="badge text-bg-success">{{$cust->created_at}}</span> </td>
+								<td>
+								    <a href="{{route('admin.customer_bookings',$cust->id)}}"  
+										class="btn btn-sm btn-outline-dark rounded-pill padding:-5px; border border-success" 
+										id="services" >
+										    <i class="bi bi-files"></i> View Bookings</a>
 								</td>
 							 </tr>
 							 @endforeach
 						  </tbody>
 						  <tfoot>
-							 <tr>
-								<th>Sl.No</th>
-								<th>Customer Name</th>
-								<th>Customer Details</th>
-								<th>Category</th>
-								<th>Referred By & From</th>
-								<th>Action</th>
+							<tr>
+								<th width="3%">Sl.No</th>
+								<th>Name</th>
+								<th width="10%">Phone</th>
+								<th width="7%">Where From</th>
+								<th width="10%">Since</th>
+								<th width="20%">Action</th>
 							 </tr>
 						  </tfoot>
 					   </table>

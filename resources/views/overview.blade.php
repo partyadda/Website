@@ -1,50 +1,133 @@
 @extends('includes.layout')
-@section('title','Party Adda celebrations budget-friendly booking Summary ')
+
+@section('title','Private Theaters for Celebration and Surprises')
+@section('keyword','private theater, private theater in Marathahalli, private movie theater, mini theater, mini party hall, party venue, celebration venue, birthday celebration, birthday parties, surprise birthday celebration, kids birthday party, first birthday, children’s birthday, baby birthday venues, baby shower halls, bride-to-be celebration, bachelorette party, mom-to-be celebration, hosting baby birthday, small get-togethers, group party, place for celebration, party venues and ideas, budget-friendly celebration, birthday places for couples, binge watch party, fun places in Bangalore')
+@section('description','PartyAdda offers private theatre celebrations in Bangalore with customizable packages for birthdays, bride to be, anniversaries, baby shower, mom to be,couples, family gatherings, and special events—fun, memorable, and affordable.')
 @section('content')
 <style>
-  .error-label {
-    color: red;
-    margin-left: 10px;
-  }
-  /* Hide the number input spin buttons */
-  .input-box::-webkit-inner-spin-button,
-  .input-box::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+    .booking-overview {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #000;
+    }
+
+    .booking-overview .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 8px;
+        padding: 0;
+        color: inherit;
+        font-size: 14px;
+    }
+
+    .booking-overview .overview-heading {
+        margin: 12px 0;
+        font-family: inherit;
+        font-size: clamp(20px, 3vw, 26px);
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .booking-overview .summary-heading {
+        margin: 0 0 12px;
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .booking-overview .form-label {
+        margin-bottom: 4px;
+        font-family: inherit;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .booking-overview .form-control,
+    .booking-overview .form-select,
+    .booking-overview .btn {
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    .booking-overview .form-control,
+    .booking-overview .form-select {
+        min-height: 40px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    .booking-overview .form-control { padding-left: 10px; padding-right: 10px; }
+    .booking-overview .form-select { padding-left: 10px; padding-right: 32px; }
+    .booking-overview .btn { padding: 8px 12px; line-height: 1.5; }
+    .booking-overview .quantity .btn { min-width: 40px; min-height: 40px; }
+    .booking-overview .quantity svg { width: 18px; height: 18px; }
+    .booking-overview .input_number { text-align: center; }
+
+    .booking-overview .summary-content {
+        height: auto;
+        margin-bottom: 12px;
+        padding: 16px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .booking-overview .summary-content hr { margin: 10px 0; }
+    .booking-overview .summary-content .fs-11 { font-size: 11px; }
+    .booking-overview .summary-content .button-custom { padding: 9px 16px; }
+
+    .booking-overview .error-label {
+        margin: 4px 0 0;
+        color: red;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .booking-overview .input-box::-webkit-inner-spin-button,
+    .booking-overview .input-box::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    @media (max-width: 767px) {
+        .booking-overview .summary-content { padding: 14px; }
+    }
 </style>
-<div class="container">
+<div class="container py-2 booking-overview">
   <div class="row">
     <div class="col-md-7">
-      <a href="javascript:void(0)" class="back-btn text-decoration-none mt-5" onclick="goBack()">
+      <a href="javascript:void(0)" class="back-btn text-decoration-none" onclick="goBack()">
         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
         </svg>
         Back
       </a>
-      <div class="fs-3 fw-bold my-4">Booking Overview</div>
-      <div class="d-flex flex-wrap mb-4">
-        <div class="d-flex me-3 me-md-4 mb-md-0 mb-3">
-          <img src="{{URL::asset('assets/img/theatre_icon.png')}}" style="width:16-x;height:16px;">
+      <h1 class="overview-heading">Booking Overview</h1>
+      <div class="d-flex flex-wrap mb-2">
+        <div class="d-flex me-3 mb-md-0 mb-2">
+          <img src="{{URL::asset('assets/img/theatre_icon.png')}}" style="width:16px;height:16px;">
           <span class="ms-2 name"></span>
-          <img src="{{URL::asset('assets/img/calender_icon.png')}}" style="width:16-x;height:16px;">
+          <img src="{{URL::asset('assets/img/calender_icon.png')}}" style="width:16px;height:16px;">
           <span class="ms-2 calender"></span>
           <span class="ms-2 time"> </span>
         </div>
       </div>
   
-      <form class="mb-5" name="personalinfo">
+      <form class="mb-3" name="personalinfo">
           
         <div class="row">
           
-          <div class="col-md-5 ">
-            <label for="Booking-Name" class="form-label">Booking Person Full Name<font color="red">*</font></label>
+          <div class="col-md-4 ">
+            <label for="Booking_Name" class="form-label">Booking Person Name<font color="red">*</font></label>
             <input type="text" class="form-control form-control-lg" id="Booking_Name" 
                 style="font-size:14px;"  name="Booking_Name" placeholder="" 
                 onkeydown="return((event.keyCode >= 65 && event.keyCode <= 120) || (event.keyCode==32));" maxlength="25" />
                 
             <label id="Booking_Name_error" class="error-label" style="display:none"></label>
-            
             <script>
               //Logic#1
               /*document.getElementById("Booking_Name").addEventListener('keydown', function (e) {
@@ -77,7 +160,7 @@
           </div>
         
           <div class="col-md-3 number_of_people" >
-            <label for="" class="form-label">No.Of Guests<font color="red">*</font></label>
+            <label for="input_number" class="form-label">No.Of Guests<font color="red">*</font></label>
             <div class="input-group quantity">
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default btn-number-minus" data-type="minus" data-field="quant[1]" disabled>
@@ -91,7 +174,8 @@
               
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default btn-number-plus" data-type="plus" data-field="quant[1]">
-                  <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1k33q06" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AddIcon">
+                  <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1k33q06" focusable="false" aria-hidden="true" 
+                  viewBox="0 0 24 24" data-testid="AddIcon">
                     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"></path>
                   </svg>
                 </button>
@@ -99,44 +183,26 @@
             </div>
           </div>
 
-          <div class="col-md-4" >
-            <label for="form-select-lg" class="form-label" >Decoration<font color="red">*</font>
+          <div class="col-md-3" >
+            <label for="form_select_lg" class="form-label" >Decoration<font color="red">*</font>
             </label>
             <select class="form-select form-select-lg" id="form_select_lg" aria-label="Default select example" style="font-size:14px;" >
               <option value="1" selected>Yes</option>
               <option value="2">No</option>
             </select>
           </div>
-          <!--
-                    <div class="col-md-3" id="ref_by_div">
-                        <label for="ref_by" class="form-label">Referred By</label>
-                        <select class="form-select ref_by" id="ref_by"
-                            aria-label="Default select example">
-                            <option value="" selected>Choose</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Whatsapp">Whatsapp</option>
-                            <option value="Google">Google</option>
-                            <option value="Youtube">Youtube</option>
-                            <option value="News Paper">News Paper</option>
-                            <option value="Flyer">Flyer</option>
-                            <option value="Friend">Friend</option>
-                            <option value="Others">Others</option>         
-                        </select>
-                    </div>
-                    -->
-          <div class="col-md-6" style="margin-top: 6px;">
-            <label for="Whatsapp-Name" class="form-label">Whatsapp Number<font color="red">*</font></label>
+          <div class="col-md-3" style="margin-top: 6px;">
+            <label for="Whatsapp_Name" class="form-label">Whatsapp Num<font color="red">*</font></label>
             <input type="number" class="form-control form-control-lg"  style="font-size:14px;" minlength="10" maxlength="10" id="Whatsapp_Name" name="Whatsapp_Name" placeholder="">
             <label id="Whatsapp_Name_error" class="error-label" style="display:none"></label>
           </div>
-          <div class="col-md-6" style="margin-top: 6px;">
-            <label for="Email-ID" class="form-label">Email ID<font color="red">*</font></label>
+          <div class="col-md-4" style="margin-top: 6px;">
+            <label for="Email_ID" class="form-label">Email ID<font color="red">*</font></label>
             <input type="email" class="form-control form-control-lg" style="font-size:14px;" required id="Email_ID" placeholder="" onkeyup="" maxlength="30">
             <label id="Email_ID_error" class="error-label" style="display:none"></label>
           </div>
-          <div class="col-md-6" style="margin-top: 6px;">
-            <label for="Coupon" class="form-label">Coupon Code</label>
+          <div class="col-md-4" style="margin-top: 6px;">
+            <label for="coupon_code" class="form-label">Coupon Code</label>
             <div class="input-group input-group-lg" >
                 
               <input type="text" class="form-control coupon_code" placeholder="" style="font-size:14px;" aria-label="coupon" 
@@ -149,9 +215,11 @@
         </div>
       </form>
     </div>
+    
     <div class="col-md-5">
-      <div class="summary-content p-3  p-md-4 find-us mb-4 h-100">
-        <div class="fs-5 fw-bold mb-4">Booking Summary</div>
+        
+      <div class="summary-content find-us">
+        <h2 class="summary-heading">Booking Summary</h2>
         <div class="d-flex mb-2">
           <span id="theater_with_person_notrequired">Base Price</span><b class="ms-auto total"></b>
         </div>
@@ -167,6 +235,7 @@
           <span id="coupon-applied-text">Coupon Applied</span><b class="ms-auto coupon-applied-amount"></b>
         </div>
         <hr>
+        
         <div class="d-flex mb-2">
           <span>Subtotal</span><b class="ms-auto sub_total"></b>
         </div>
@@ -175,17 +244,19 @@
           <span>Payable Advance Amount</span><b class="ms-auto advance"></b>
         </div>
         <hr>
+        
         <div class="d-flex mb-2 ">
           <span>Balance Amount<div class="fs-11"></div></span>
           <b class="ms-auto balance"></b>
         </div>
+        
         <div class="row">
-          <div class="col-md-6" id="next_occasion_id">
-            <a href="javascript:void(0)" class="btn button-custom rounded-pill px-3 px-lg-12 px-xxl-5 next_occasion">Next Occasion</a>
+          <div class="col-md-12" id="next_occasion_id">
+            <a href="javascript:void(0)" class="btn button-custom rounded-pill px-3 next_occasion">Next Occasion</a>
           </div>
 
           <div class="col-md-6">
-            <a href="javascript:void(0)" class="btn button-custom rounded-pill px-3 px-lg-12 px-xxl-5 pay_book" style="display:none;background:green">Pay and Book</a>
+            <a href="javascript:void(0)" class="btn button-custom rounded-pill px-3 pay_book" style="display:none;background:green">Pay and Book</a>
           </div>
         </div>
 
@@ -775,3 +846,4 @@
 </script>
 
 @endsection
+

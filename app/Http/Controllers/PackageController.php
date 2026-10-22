@@ -13,6 +13,7 @@ use App\Models\theatre;
 use Razorpay\Api\Api;
 use App\Repositories\PackageRepo;
 use Illuminate\Support\Facades\DB;
+use App\Helper\Helper;
 
 use Exception;
 
@@ -95,6 +96,7 @@ class PackageController extends Controller
       $customer_save->email = $request->customer_email;
       $customer_save->phone = $request->customer_phno;
       $customer_save->referred_by = NULL; //$request->ref_by;
+      $customer_save->wherefrom = 'BackEnd';
       $customer_save->save();
 
       //$customerData = customer::select('id')->where('phone', $request->customer_phno)->where('email', $request->customer_email)->first();
@@ -136,6 +138,15 @@ class PackageController extends Controller
 
         $checkForExisting = booking::where(['theatre_id' => $bookingData->theatre_id,  'booking_status' => '1', 'slot_id' => $bookingData->slot_id, 'date' => date('Y-m-d', strtotime($bookingData->slot_date))])->whereNotIn('customer_id', [$bookingData->customer_id])->get();
 
+        // $checkForExisting = booking::where(
+        //   [
+        //     'theatre_id' => $bookingData->theatre_id,
+        //     'slot_id' => $bookingData->slot_id,
+        //     'date' => date('Y-m-d', strtotime($bookingData->slot_date))
+        //   ]
+        // )->whereIn('booking_status', Helper::BOOKING_STATUS_CHECK_ARRAY)->whereNotIn('customer_id', [$bookingData->customer_id])->get();
+
+
         if (isset($checkForExisting) && count($checkForExisting) > 0) {
           return response()->json(['success' => false, 'errMsg' => 'Slot is already booked, Please select other available slot and book']);
         }
@@ -163,7 +174,7 @@ class PackageController extends Controller
         $Booking->theatre_id = $bookingData->theatre_id;
         $Booking->cake_id = $bookingData->cake_id;
         $Booking->name_on_cake = $bookingData->name_on_cake;
-        $Booking->cake_extra_amount = $bookingData->cake_extra_amount;
+        $Booking->cake_amount = $bookingData->cake_extra_amount;
         $Booking->slot_id = $bookingData->slot_id;
         $Booking->decoration_id = $bookingData->decoration_id;
         $Booking->your_name = $bookingData->decoration_your_name;
@@ -201,12 +212,14 @@ class PackageController extends Controller
             'response_msg' => 'Payment Pending',
           ];
 
-          $payment_id = Payment::create($paymentData)->id;
+          $payment_id = Payment::create($paymentData)->payment_id;
         }
 
         if ($booking_id != NULL && $payment_id != NULL) {
           $paybleAmount = $bookingData->advance_amount;
           $paybleAmountInPaise = $paybleAmount * 100;
+
+          $this->pckg->updateBilling($booking_id);
 
           $customer = customer::find($bookingData->customer_id);
 

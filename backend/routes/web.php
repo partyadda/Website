@@ -60,6 +60,8 @@ Route::post('/phonepe-bookingpayconfirm',[bookingController::class, 'bookingpayC
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
+
+use App\Http\Controllers\reportController;
 use App\Http\Controllers\TheatreController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\decorationController;
@@ -74,6 +76,7 @@ use App\Http\Controllers\AddonController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\AdminBookingSlotsController;
 use App\Http\Controllers\CalendarEventSyncController;
+use App\Http\Controllers\PackageCreateController;
 
 // Home Page Routes
 // Route::view('/', 'index')->name('index');
@@ -102,6 +105,7 @@ Route::get('/admin/booking/send_mail', [BookingController::class, 'send_bookings
 Route::get('/admin/booking/cake-orders', [BookingController::class, 'view_cake_orders'])->name('admin.booking.cakeOrders');
 
 Route::get('/admin/booking/today-booking', [BookingController::class, 'view_today_booking'])->name('admin.booking.todayBooking');
+//Route::get('/admin/booking/calendar-booking', [BookingController::class, 'view_today_booking'])->name('admin.booking.calenderBooking');
 
 
 // Book Slots
@@ -109,11 +113,27 @@ Route::get('/admin/book-slots', [AdminBookingSlotsController::class, 'select_the
 Route::get('/admin/book-theatre/{theatre_id}', [AdminBookingSlotsController::class, 'book_theater'])->name('admin.book-theatre');
 Route::get('/admin/book-package/{package_id}', [AdminBookingSlotsController::class, 'book_package'])->name('admin.book-package');
 Route::post('/admin/book-get-slots',  [AdminBookingSlotsController::class, 'slots_by_date_and_theater'])->name('admin.get-slots');
-Route::post('/admin/book-theatre-store', [AdminBookingSlotsController::class, 'book_slot_store'])->name('admin.book-theatre-slot-store');
-Route::post('/admin/book-package-store', [AdminBookingSlotsController::class, 'book_slot_store'])->name('admin.book-package-slot-store');
+Route::match(['post', 'put'], '/admin/book-theatre-store', [AdminBookingSlotsController::class, 'book_slot_store'])->name('admin.book-theatre-slot-store');
+Route::match(['post', 'put'], '/admin/book-package-store', [AdminBookingSlotsController::class, 'book_slot_store'])->name('admin.book-package-slot-store');
 Route::get('/admin/booking/edit/remarks/{booking_id}', [AdminBookingSlotsController::class, 'edit_remarks'])->name('admin.booking.edit.remarks');
 Route::post('/admin/booking/update/remarks',  [AdminBookingSlotsController::class, 'update_remarks'])->name('admin.booking.update.remarks');
-
+Route::get('/admin/booking/edit/cancel/{booking_id}/{nav_type}', [AdminBookingSlotsController::class, 'booking_cancel_view'])->name('admin.booking.edit.cancel');
+Route::post('/admin/booking/cancel',  [AdminBookingSlotsController::class, 'booking_cancel'])->name('admin.booking.cancel');
+Route::post('/admin/booking/no-show',  [AdminBookingSlotsController::class, 'booking_no_show'])->name('admin.booking.no_show');
+Route::get('/admin/booking/edit/{booking_id}/{nav_type}', [AdminBookingSlotsController::class, 'edit_booking'])->name('admin.booking.edit');
+Route::get('/admin/booking/refund/initiate/{booking_id}/{nav_type}', [AdminBookingSlotsController::class, 'booking_refund_initiate_view'])->name('admin.booking.refund.initiate');
+Route::post('/admin/booking/refund/initiate',  [AdminBookingSlotsController::class, 'booking_refund_initiate'])->name('admin.booking.refund.initiate.update');
+Route::post('/admin/booking/refund/complete',  [AdminBookingSlotsController::class, 'booking_refund_complete'])->name('admin.booking.refund.complete');
+Route::get('/admin/booking/billing/edit/{booking_id}/{nav_type}',  [AdminBookingSlotsController::class, 'booking_billing_edit'])->name('admin.booking.billing.edit');
+Route::post('/admin/booking/billing/update',  [AdminBookingSlotsController::class, 'booking_billing_update'])->name('admin.booking.billing.update');
+Route::get('/admin/booking/billing/collect_amount/{booking_id}/{nav_type}',  [AdminBookingSlotsController::class, 'booking_billing_colllect_amount'])->name('admin.booking.billing.collect.amount');
+Route::post('/admin/booking/billing/collect_amount/update',  [AdminBookingSlotsController::class, 'booking_billing_colllect_amount_update'])->name('admin.booking.billing.collect.amount.update');
+// Package Create 
+Route::prefix('/admin/package')->group(function () {
+  Route::get('/list', [PackageCreateController::class, 'view_packages'])->name('admin.package.view');
+  Route::get('/edit/{id}', [PackageCreateController::class, 'edit_package'])->name('admin.package.edit');
+  Route::post('/update', [PackageCreateController::class, 'update_package'])->name('admin.package.update');
+});
 
 //Theatre
 Route::get('/admin/add_theater', [TheatreController::class,'index'])->name('admin.add_theater');
@@ -194,6 +214,9 @@ Route::get('/admin/timeslot/{id}', [TimeSlotsController::class,'timeslot'])->nam
 Route::post('/admin/create_timeslots', [TimeSlotsController::class,'create'])->name('admin.create_timeslots');
 Route::get('/admin/suspend_timeslots/{id}', [TimeSlotsController::class,'suspend'])->name('admin.suspend_timeslots');
 Route::post('/admin/update_timeslots/{id}', [TimeSlotsController::class,'update'])->name('admin.update_timeslots');
+
+
+
 
 // Route::get('/index/branch', [homeController::class,'branch_theatre'])->name('index.branch');
 // Route::get('/home/{id}', [homeController::class,'home'])->name('home');

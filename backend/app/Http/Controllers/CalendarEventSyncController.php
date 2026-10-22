@@ -33,6 +33,7 @@ class CalendarEventSyncController extends Controller
     $eventsData = $calendarEventData['eventsData'];
     $isEventsInserted = 0;
     $isEventsInsertedCount = 0;
+    $booking_ids = 'None';
     $errorData = array();
 
     if (isset($eventsData) && count($eventsData) > 0) {
@@ -62,6 +63,7 @@ class CalendarEventSyncController extends Controller
             booking::where('id', $booking_id)->update($bookingUpdate);
 
             $isEventsInserted = 1;
+            $booking_ids = $booking_ids . " ( ". $booking_id . ")" ;
             $isEventsInsertedCount++;
           } else {
             //echo json_encode($eventResponse->body());
@@ -75,6 +77,9 @@ class CalendarEventSyncController extends Controller
     $data['isAllSync'] = $isAllSync;
     $data['isEventsInserted'] = $isEventsInserted;
     $data['isEventsInsertedCount'] = $isEventsInsertedCount;
+    
+     $data['booking_ids'] = $booking_ids;
+     
     $data['errorData'] = $errorData;
 
     //echo json_encode($data);
@@ -83,10 +88,13 @@ class CalendarEventSyncController extends Controller
 
   function getBookingCalendarEventArray()
   {
-    $startDate = date('Y-m-d', strtotime('2024-12-15'));
+    $startDate = date('Y-m-d', strtotime('2026-07-01'));
     //$startDate = date('Y-m-d', strtotime('2025-04-25'));
 
-    $bookings = Booking::with(['customer', 'theatre.branchs', 'cake', 'slot', 'decoration', 'payment', 'addons.addon'])->where('date', '>=', $startDate)->where('booking_status', '=', 1)->whereNull('cal_event_id')->orderByDesc('date')->get();
+    $bookings = Booking::with(['customer', 'theatre.branchs', 'cake', 'slot', 'decoration', 'payment', 'addons.addon'])
+        ->where('date', '>=', $startDate)
+        ->where('booking_status', '=', 1)
+        ->whereNull('cal_event_id')->orderByDesc('date')->get();
 
     $isAllSync = 0;
     if (isset($bookings) && count($bookings) > 0) {
@@ -102,24 +110,44 @@ class CalendarEventSyncController extends Controller
     foreach ($bookings as $book) {
       $calendarEvent = array();
 
-      $calendarEvent['summary'] = ($book->decoration->name ?? "") . " - " . $book->theatre->name . " Theatre";
-      $calendarEvent['location'] = $book->theatre->name . "," . $book->theatre->branchs->branch_name;
-      $calendarEvent['description'] = $htmlData = view('cal_event_detail', compact('book'))->render();
-
-      $startDateTime = date("Y-m-d H:i:s", strtotime($book->date . " " . $book->slot->start_time));
-      $addDurationMinutes = "+ " . $this->getDuationMinutes($book->slot->duration) . " minutes";
-      $endDateTime = date('Y-m-d H:i:s', strtotime($addDurationMinutes, strtotime($startDateTime)));
-
-      $startDateTimeEvent =  date("Y-m-d\TH:i:s", strtotime($startDateTime));
-      $endDateTimeTimeEvent = date("Y-m-d\TH:i:s", strtotime($endDateTime));
-
-      $calendarEvent['start'] = array('dateTime' => $startDateTimeEvent, 'timeZone' => $event_timezone);
-      $calendarEvent['end'] = array('dateTime' => $endDateTimeTimeEvent, 'timeZone' => $event_timezone);
-
-      $eventsData['event'] =  $calendarEvent;
-      $eventsData['booking_id'] = $book->id;
-
-      $events[] = $eventsData;
+     // $calendarEvent['summary'] = ($book->decoration->name ?? "") . " - " . $book->theatre->name . " Theatre";
+    
+        $calendarEvent['summary'] = 
+    //        $book->theatre->name . " Theatre" . " | " . 
+            ($book->decoration->name ?? "Casual"). " | " . 
+            ($book->customer->customer_name ?? "") . " | " .  
+            ($book->No_people).  " ppl | " .
+            ($book->cake->cakename ?? " No") . " Cake | (" .
+            ($book->partner_name ?? " ") . ")" ;
+        
+        $calendarEvent['location'] = strtoupper($book->theatre->name) ;
+        $calendarEvent['description'] = $htmlData = view('cal_event_detail', compact('book'))->render();
+        
+        $calendarEvent['colorId'] = $book->theatre->id; 
+        
+        if($book->new_starttime)
+        {
+            $startDateTime = date("Y-m-d H:i:s", strtotime($book->date . " " .   $book->new_starttime ) );
+            $endDateTime = date("Y-m-d H:i:s", strtotime($book->date . " " .   $book->new_endttime));
+        }
+        else
+        {
+            $startDateTime = date("Y-m-d H:i:s", strtotime($book->date . " " .   $book->slot->start_time));
+            $addDurationMinutes = "+ " . $this->getDuationMinutes($book->slot->duration) . " minutes";
+            $endDateTime = date('Y-m-d H:i:s', strtotime($addDurationMinutes, strtotime($startDateTime)));
+        }
+    
+        $startDateTimeEvent =  date("Y-m-d\TH:i:s", strtotime($startDateTime));
+        $endDateTimeTimeEvent = date("Y-m-d\TH:i:s", strtotime($endDateTime));
+    
+        $calendarEvent['start'] = array('dateTime' => $startDateTimeEvent, 'timeZone' => $event_timezone);
+        $calendarEvent['end'] = array('dateTime' => $endDateTimeTimeEvent, 'timeZone' => $event_timezone);
+        
+        $eventsData['event'] =  $calendarEvent;
+        
+        $eventsData['booking_id'] = $book->id;
+        
+        $events[] = $eventsData;
     }
 
     $data['isAllSync'] = $isAllSync;

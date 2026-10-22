@@ -1,10 +1,98 @@
 @extends('includes.layout')
-@section('title','Party Adda Terms and conditions')
+
+@section('title','Private Theaters for Celebration and Surprises')
+@section('keyword','private theater, private theater in Marathahalli, private movie theater, mini theater, mini party hall, party venue, celebration venue, birthday celebration, birthday parties, surprise birthday celebration, kids birthday party, first birthday, children’s birthday, baby birthday venues, baby shower halls, bride-to-be celebration, bachelorette party, mom-to-be celebration, hosting baby birthday, small get-togethers, group party, place for celebration, party venues and ideas, budget-friendly celebration, birthday places for couples, binge watch party, fun places in Bangalore')
+@section('description','PartyAdda offers private theatre celebrations in Bangalore with customizable packages for birthdays, bride to be, anniversaries, baby shower, mom to be,couples, family gatherings, and special events—fun, memorable, and affordable.')
 
 @section('content')
 
-<div class="container">
-  <a href="javascript:void(0)" class="back-btn text-decoration-none mt-5" onclick="goBack()">
+<style>
+    .booking-agreement {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #000;
+    }
+
+    .booking-agreement .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 8px;
+        padding: 0;
+        color: inherit;
+        font-size: 14px;
+    }
+
+    .booking-agreement .agreement-heading {
+        margin: 12px 0;
+        padding: 0;
+        font-family: inherit;
+        font-size: clamp(20px, 3vw, 26px);
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .booking-agreement .section-title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin: 12px 0 8px;
+        padding: 0;
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    .booking-agreement .section-title small {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .booking-agreement .section-icon { margin: 0; font-size: 18px; }
+    .booking-agreement .list-group { padding-left: 0; }
+
+    .booking-agreement .list-group-item {
+        padding: 8px 12px;
+        color: inherit;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .booking-agreement .form-check {
+        margin-bottom: 8px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .booking-agreement .form-check-input {
+        width: 1.1em;
+        height: 1.1em;
+        margin-top: 0.25em;
+    }
+
+    .booking-agreement .button-custom {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .booking-agreement .alert { margin-bottom: 12px; font-size: 14px; }
+
+    @media (max-width: 767px) {
+        .booking-agreement .list-group-item { padding: 8px 10px; }
+    }
+</style>
+
+
+<div class="container py-2 booking-agreement">
+  <a href="javascript:void(0)" class="back-btn text-decoration-none" onclick="goBack()">
     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
     </svg>
@@ -14,11 +102,11 @@
   <div class="row justify-content-center">
     <div class="col-lg-10">
       
-      <div class="fs-3 fw-bold my-4">Terms & Conditions</div>
+      <h1 class="agreement-heading">Terms & Conditions</h1>
       
        <!-- General Section -->
     <h4 class="section-title"><span class="section-icon">🚫</span>General</h4>
-    <ul class="list-group mb-4">
+    <ul class="list-group mb-3">
       <li class="list-group-item">No outside food allowed inside the premises.</li>
       <li class="list-group-item">Smoking & alcohol are prohibited; violators will be asked to leave.</li>
       <li class="list-group-item">Children above 5 years will be charged. All minors must be accompanied by an adult and carry valid ID.</li>
@@ -29,14 +117,14 @@
 
     <!-- Technical Section -->
     <h4 class="section-title"><span class="section-icon">🎬</span>Technical & Entertainment</h4>
-    <ul class="list-group mb-4">
+    <ul class="list-group mb-3">
       <li class="list-group-item">In case of technical issues (projector, sound, AC, internet), refund will be processed after deducting rent for the affected duration.</li>
       <li class="list-group-item">OTT access is provided — guests must use their own login credentials. Streaming of illegal content is strictly prohibited.</li>
     </ul>
 
     <!-- Add-ons Section -->
     <h4 class="section-title"><span class="section-icon">🌟</span>Special Add-ons <small class="text-muted">(Notify staff when needed, if chosen)</small></h4>
-    <ul class="list-group mb-4">
+    <ul class="list-group mb-3">
       <li class="list-group-item"><strong>Fog Entry:</strong> Available during entry or cake cutting.</li>
       <li class="list-group-item"><strong>360° Selfie Booth, Photography</strong></li>
       <li class="list-group-item"><strong>DJ Lights:</strong> Available for 30 minutes during your slot.</li>
@@ -46,11 +134,11 @@
 
     <!-- Refund Section -->
     <h4 class="section-title"><span class="section-icon">💸</span>Refund Policy</h4>
-    <ul class="list-group mb-4">
+    <ul class="list-group mb-3">
       <li class="list-group-item">Full refund for cancellations made at least 72 hours in advance.</li>
       <li class="list-group-item">No refund for cancellations made within 72 hours of your scheduled time.</li>
     </ul>
-      <div class="form-check mt-4">
+      <div class="form-check mt-3">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
         <label class="form-check-label" for="flexCheckDefault">I agree to the above Terms & Conditions.</label>
       </div>
@@ -59,7 +147,7 @@
       <form action="{{ route('package.booking.book_package_now') }}" id="form_book_now_package" method="POST">
         @csrf
         <input type="hidden" name="is_package" value="1">
-        <button type="submit" class="btn button-custom rounded-pill px-3 px-lg-4 px-xxl-5 my-5 w-100" id="pay_now"> </button>
+        <button type="submit" class="btn button-custom rounded-pill px-3 my-3 w-100" id="pay_now"> </button>
       </form>
       @else
       <form action="{{ route('book-now') }}" id="form_book_now" method="POST">
@@ -97,7 +185,7 @@
         <input type="hidden" name="addon_amount">
         <input type="hidden" name="discount_id">
 
-        <button type="submit" class="btn button-custom rounded-pill px-3 px-lg-4 px-xxl-5 my-5 w-100" id="pay_now"> </button>
+        <button type="submit" class="btn button-custom rounded-pill px-3 my-3 w-100" id="pay_now"> </button>
       </form>
       @endif
 
@@ -408,3 +496,4 @@
 
 </script>
 @endsection
+

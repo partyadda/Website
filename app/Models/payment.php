@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class payment extends Model
 {
+      protected $primaryKey = 'payment_id';
+
     // use HasFactory;
     protected $table = 'payment';
     protected $fillable = [

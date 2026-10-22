@@ -6,7 +6,21 @@ use Exception;
 
 class Helper {
 
-  public function sendAdminMail($emailArray, $subject = "Booking Details", $bodyContent) {
+  const PAYMENT_STATUS_PENDING = "0";
+  const PAYMENT_STATUS_PAID = "1";
+
+  const BOOKING_STATUS_INIT = 0;    // Created / Payment Failed / Payment Initiated
+  const BOOKING_STATUS_SUCCESS = 1; // Payment success and Booked
+  const BOOKING_STATUS_CANCEL = 2;  // Booking Cancelled
+  const BOOKING_STATUS_REFUND_INIT = 3;     // Refund Initiated 
+  const BOOKING_STATUS_REFUND_COMPLETE = 4; // Refund Completed 
+  const BOOKING_STATUS_NO_SHOW = 5; // Booking No show
+  const BOOKING_STATUS_RE_SCHEDULED = 6; // Booking Re Scheduled
+
+  const BOOKING_STATUS_CHECK_ARRAY = [self::BOOKING_STATUS_SUCCESS, self::BOOKING_STATUS_RE_SCHEDULED];
+
+  public function sendAdminMail(array $emailArray, string $bodyContent,  string $subject = "Booking Details")
+  {
     try {
       $to = implode(', ', $emailArray);
 
@@ -36,5 +50,19 @@ class Helper {
     } catch (Exception $e) {
 
     }
+  }
+  public static function getZeroIfNotSet(?int $value): Int
+  {
+    if (isset($value) && $value > 0) {
+      return $value;
+    }
+    return 0;
+  }
+  public static function getAmountForBilling(?int $masterAmount, ?int $bookedAmount)
+  {
+    if (self::getZeroIfNotSet($bookedAmount) > 0) {
+      return $bookedAmount;
+    }
+    return $masterAmount;
   }
 }

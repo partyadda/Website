@@ -33,8 +33,9 @@ class AdminBookTheaterRequest extends FormRequest
       'extra_person_price' => 'required|integer',
       'max_people' => 'required|integer',
       'peopleallowed' => 'required|integer',
-      'peopleallowed' => 'required|integer',
-      'decoration_included' => 'required|integer',
+      
+     // 'decoration_included' => 'required|integer',
+      
       'decoration_amount' => 'required|integer',
 
       'admin_booking_date' => 'required|string',
@@ -47,7 +48,6 @@ class AdminBookTheaterRequest extends FormRequest
             
       'payment_type' => 'required|string',
       'payment_advance' => 'required|integer|min:1',
-      'payment_confirmed_by_id' => 'required|integer',
       'payment_confirmed_by' => 'required|string',
     ];
 
@@ -83,20 +83,22 @@ class AdminBookTheaterRequest extends FormRequest
     }
 
     if (isset($input['payment_type']) && $input['payment_type'] != "CASH") {
-      $rules['payment_screen_shot'] = 'required|file|mimes:jpeg,gif,png,jpg,webp,bmp,pdf|max:4096';
+      //$rules['payment_screen_shot'] = 'required|file|image|mimes:jpeg,gif,png,jpg,webp,pdf|max:4096';
     }
 
     return $rules;
   }
 
   public function attributes()
+  
+
   {
     return  [
       'admin_booking_date' => 'booking date',
       'theater_slot_id' => "theater slot",
       'branch_cake_id' => 'cake',
-      'package_cake_id' => 'cake',
-      'decoration_needed' => "decoration include"
+      'package_cake_id' => 'cake'
+      //,'decoration_needed' => "decoration include"
     ];
   }
 }

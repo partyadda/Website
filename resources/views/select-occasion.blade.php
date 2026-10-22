@@ -1,18 +1,110 @@
 @extends('includes.layout')
-@section('title','Select Occasion')
 
+@section('title','Private Theaters for Celebration and Surprises')
+@section('keyword','private theater, private theater in Marathahalli, private movie theater, mini theater, mini party hall, party venue, celebration venue, birthday celebration, birthday parties, surprise birthday celebration, kids birthday party, first birthday, children’s birthday, baby birthday venues, baby shower halls, bride-to-be celebration, bachelorette party, mom-to-be celebration, hosting baby birthday, small get-togethers, group party, place for celebration, party venues and ideas, budget-friendly celebration, birthday places for couples, binge watch party, fun places in Bangalore')
+@section('description','PartyAdda offers private theatre celebrations in Bangalore with customizable packages for birthdays, bride to be, anniversaries, baby shower, mom to be,couples, family gatherings, and special events—fun, memorable, and affordable.')
 @section('content')
  <style>
-      .error-label {
+    .decoration-selection {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #000;
+    }
+
+    .decoration-selection .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 8px;
+        padding: 0;
+        color: inherit;
+        font-size: 14px;
+    }
+
+    .decoration-selection .selection-heading {
+        margin: 12px 0;
+        padding: 0;
+        font-family: inherit;
+        font-size: clamp(20px, 3vw, 26px);
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .decoration-selection .summary-heading {
+        margin: 0 0 12px;
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .decoration-selection .select-option {
+        width: 100%;
+        margin-bottom: 0;
+        padding: 8px;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    .decoration-selection .select-option .frame { margin-bottom: 6px; }
+    .decoration-selection .select-option p { font-size: 14px; line-height: 1.5; }
+
+    .decoration-selection .form-label {
+        margin-bottom: 4px;
+        font-family: inherit;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .decoration-selection .form-control {
+        min-height: 40px;
+        padding: 8px 10px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .decoration-selection .error-label {
+        margin: 4px 0 0;
         color: red;
-        margin-left: 10px;
+        font-family: inherit;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .decoration-selection .error-label:empty { margin: 0; }
+
+    .decoration-selection .summary-content {
+        height: auto;
+        margin-bottom: 12px;
+        padding: 16px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .decoration-selection .summary-content hr { margin: 10px 0; }
+    .decoration-selection .summary-content .fs-11 { font-size: 11px; }
+
+    .decoration-selection .button-custom {
+        padding-top: 9px;
+        padding-bottom: 9px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 767px) {
+        .decoration-selection .select-option { padding: 6px; }
+        .decoration-selection .summary-content { padding: 14px; }
     }
 </style>
 
-<div class="container">
+<div class="container py-2 decoration-selection">
     <div class="row">
         <div class="col-md-7">
-            <a href="javascript:void(0)" class="back-btn text-decoration-none mt-5" onclick="goBack()">
+            <a href="javascript:void(0)" class="back-btn text-decoration-none" onclick="goBack()">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true"
                     height="24" width="24" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -20,11 +112,11 @@
                         clip-rule="evenodd"></path>
                 </svg>Back
             </a>
-            <div class="fs-3 fw-bold my-4">Select Decoration </div>
+            <h1 class="selection-heading">Select Decoration </h1>
             <label id="check_error" class="error-label" ></label>
             <!--  -->
-            <form class="mb-5" name="personalinfo">
-                <div class="row gy-4">
+            <form class="mb-3" name="personalinfo">
+                <div class="row gy-3">
                     @foreach($decorationsWithAssets as $occ)
                     <div class="col-6 col-lg-3">
                         <label class="select-option text-center">
@@ -135,8 +227,8 @@
             </form>
         </div>
         <div class="col-md-5">
-            <div class="summary-content p-3  p-md-4 find-us mb-4 h-100">
-                <div class="fs-5 fw-bold mb-4">Booking Summary</div>
+            <div class="summary-content find-us">
+                <h2 class="summary-heading">Booking Summary</h2>
                 <div class="d-flex mb-2">
                     <span id="theater_with_person_notrequired">Base Price</span><b class="ms-auto total"></b>
                 </div>
@@ -168,7 +260,7 @@
                 </div>
                 <div class="col-md-6">
                     <a href="javascript:void(0)"
-                        class="btn button-custom rounded-pill px-3 px-lg-12 px-xxl-5 next_cake">Next Cake</a>
+                        class="btn button-custom rounded-pill px-3 next_cake">Next Cake</a>
                 </div>
             </div>
         </div>

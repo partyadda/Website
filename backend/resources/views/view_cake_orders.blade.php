@@ -48,7 +48,7 @@
             </div>
           </div> <!-- /.card-header -->
           <div class="card-body">
-            
+           
             @include('includes.inc_booking_cake_order_table')
 
           </div> <!-- /.card-body -->

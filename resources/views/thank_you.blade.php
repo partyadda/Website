@@ -1,12 +1,63 @@
 @extends('includes.layout')
-@section('title','Thank You!')
 
+@section('title','Private Theaters for Celebration and Surprises')
+@section('keyword','private theater, private theater in Marathahalli, private movie theater, mini theater, mini party hall, party venue, celebration venue, birthday celebration, birthday parties, surprise birthday celebration, kids birthday party, first birthday, children’s birthday, baby birthday venues, baby shower halls, bride-to-be celebration, bachelorette party, mom-to-be celebration, hosting baby birthday, small get-togethers, group party, place for celebration, party venues and ideas, budget-friendly celebration, birthday places for couples, binge watch party, fun places in Bangalore')
+@section('description','PartyAdda offers private theatre celebrations in Bangalore with customizable packages for birthdays, bride to be, anniversaries, baby shower, mom to be,couples, family gatherings, and special events—fun, memorable, and affordable.')
 @section('content')
 
 <style>
-  .thank-you-message {
-    text-align: center;
-  }
+    .booking-payment-result {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .booking-payment-result .thank-you-note {
+        margin: 12px 0;
+        font-family: inherit;
+        font-size: clamp(20px, 3vw, 26px);
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .booking-payment-result .booking-meta { gap: 8px 12px; }
+    .booking-payment-result .booking-meta > div { align-items: center; }
+    .booking-payment-result .booking-meta img { width: 24px; height: 24px; object-fit: contain; }
+
+    .booking-payment-result p,
+    .booking-payment-result .lead {
+        margin: 0 0 8px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    .booking-payment-result hr { margin: 10px 0; }
+    .booking-payment-result .summary-content {
+        height: auto;
+        margin-bottom: 12px;
+        padding: 16px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .booking-payment-result .summary-heading {
+        margin: 0 0 12px;
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .booking-payment-result .fs-11 { font-size: 11px; }
+    .booking-payment-result .btn { padding: 9px 16px; font-family: inherit; font-size: 14px; line-height: 1.5; }
+    .booking-payment-result .thank-you-message { text-align: center; }
+
+    @media (max-width: 767px) {
+        .booking-payment-result .summary-content { padding: 14px; }
+    }
 </style>
 <script>
   // document.addEventListener('DOMContentLoaded', function () {
@@ -19,59 +70,59 @@
   // });
 </script>
 
-<div class="container">
+<div class="container py-2 booking-payment-result">
   {{-- <div class="thank-you-message">
     <h1 class="display-4">Thank You!</h1>
     <p class="lead">Your slot has been booked successfully. One of our executives will contact you shortly regarding payment.</p>
-    <hr class="my-4">
+    <hr class="my-2">
     <!--<a class="btn btn-primary btn-lg" href="javascript:void(0)" role="button" onclick="clear();">Go to Homepage</a>-->
   </div> --}}
 
   <div class="row">
     <div class="col-md-7">
-      <div class="fs-4 fw-bold my-4 thank-you-note">
+      <div class="thank-you-note">
         @if(($is_paid ?? 0) == 1)
           Congratulations ! - {{ $customer->customer_name ?? '' }}
         @else
-          Payment Unsuccessful!!
+          Payment Couldn’t Be Completed!!
         @endif
       </div>
-      <div class="d-flex flex-wrap mb-4">
-        <div class="d-flex me-3 me-md-4 mb-md-0 mb-3">
-          <img src="{{URL::asset('assets/img/theatre_icon.png')}}" style="width:32-x;height:32px;">
+      <div class="d-flex flex-wrap mb-2 booking-meta">
+        <div class="d-flex mb-0">
+          <img src="{{URL::asset('assets/img/theatre_icon.png')}}" style="width:24px;height:24px;">
           <span class="ms-2 name"></span>&nbsp;Theatre
         </div>
-        <div class="d-flex me-3 me-md-4 me-sm-6 me-xs-6">
-          <img src="{{URL::asset('assets/img/calender_icon.png')}}" style="width:32-x;height:32px;">
+        <div class="d-flex">
+          <img src="{{URL::asset('assets/img/calender_icon.png')}}" style="width:24px;height:24px;">
           <span class="ms-2 calender"></span>
         </div>
-        <div class="d-flex me-3 me-md-4 me-sm-6 me-xs-6">
-          <img src="{{URL::asset('assets/img/timer_icon.png')}}" style="width:32-x;height:32px;">
+        <div class="d-flex">
+          <img src="{{URL::asset('assets/img/timer_icon.png')}}" style="width:24px;height:24px;">
           <span class="ms-2 time"> </span>
         </div>
       </div>
-      <hr class="my-4">
+      <hr class="my-2">
 
       @if(($is_paid ?? 0) == 1)
         <p class="lead">Your slot has been booked successfully. </p>
         <p>If you have any further questions about your booking, please don&#39;t hesitate to reach out to us on our WhatsApp number.
-        <a href="https://wa.me/+919845740260" target="_blank" aria-label="WhatsApp"><img
-          src="{{URL::asset('assets/img/whatsapp-icon.png')}}" width="25px; height: 25px;"/></a>
+        <a href="https://wa.me/+919845740260" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><img
+          src="{{URL::asset('assets/img/whatsapp-icon.png')}}" width="25" height="25" alt="WhatsApp"/></a>
         </p>
       @else
-        <p>You may try again or contact our customer support team to explore other options for booking your slot.
-         <a href="https://wa.me/+919845740260" target="_blank" aria-label="WhatsApp"><img
-          src="{{URL::asset('assets/img/whatsapp-icon.png')}}" width="25px; height: 25px;"/></a>
+        <p>Your booking isn’t confirmed yet. Please try again or contact us on WhatsApp for help. If any amount was debited, contact us before retrying so we can check your payment status
+         <a href="https://wa.me/+919845740260" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><img
+          src="{{URL::asset('assets/img/whatsapp-icon.png')}}" width="25" height="25" alt="WhatsApp"/></a>
         </p>
       @endif
-      <hr class="my-4">
+      <hr class="my-2">
       <a class="btn btn-primary btn-sm homepage" href="javascript:void(0)">Go to Homepage</a>
-      <br><br>
+      <div class="mb-2"></div>
     </div>
 
     <div class="col-md-5">
-      <div class="summary-content p-3  p-md-4 find-us mb-4 h-100">
-        <div class="fs-5 fw-bold mb-4">Booking Summary</div>
+      <div class="summary-content find-us">
+        <h2 class="summary-heading">Booking Summary</h2>
         <div class="d-flex mb-2">
           <span>Base Price</span><b class="ms-auto total"></b>
         </div>
@@ -251,3 +302,4 @@
 </script>
 
 @endsection
+

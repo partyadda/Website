@@ -1,4 +1,5 @@
 @extends('includes.layout')
+
 @section('title','Booking')
 
 @section('content')
@@ -25,7 +26,7 @@
 </div>
 <div class="app-content">
   <!--begin::Container-->
-  
+
   @include('includes.inc_session_success')
 
   <div class="container-fluid">
@@ -36,100 +37,81 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Booking Orders</h3>
-          </div> <!-- /.card-header -->
-          <div class="card-body">
-
-            <div class="row">
-              
+          </div>
+          
+          <!-- /.card-header -->
+        <div class="card-body">
+            <!-- Filter Area -->
+            <div class="row g-0 align-items-end">
+              <div class="col-md-2">
+                <label for="basic-url" class="form-label">Date Range<font color="red">*</font></label>
+              </div>
               <div class="col-md-6">
-                <label for="basic-url" class="form-label">
-                  Select Date Range<font color="red">*</font>
-                </label>
-              
                 <div class="input-group">
-                  <span class="input-group-text" id="basic-addon3">
-                    <i class="bi bi-calendar"></i>
-                  </span>
-                  <button type="button" class="form-control" id="date_range_filter">
-                    {{ $date_filterUI ?? 'Select Date Range'}}
-                  </button>
-                  
-                  <form action="{{ route('admin.booking') }}" method="GET">
-                    <input type="hidden" class="form-control" id="booking_date_filter" name="booking_date_filter"
-                      required readonly value="{{ $date_filter ?? '' }}" />
-              
-                    <button type="submit" class="btn btn-primary" id="btn_date_filter">
-                      <i class="bi bi-files"></i> Submit
-                    </button>
-                  </form>
+                  <span class="input-group-text" id="basic-addon3"><i class="bi bi-calendar"></i></span>
+                  <button type="button" class="form-control fs-4" id="date_range_filter">{{ $date_filterUI ?? 'Select Date Range'}}</button>
                 </div>
               </div>
               
+              <div class="col-md-2">
+                <form action="{{ route('admin.booking') }}" method="GET">
+                  <input type="hidden" class="form-control" id="booking_date_filter" name="booking_date_filter"
+                    required readonly value="{{ $date_filter ?? '' }}" />
               
+                  <button type="submit" class="btn rounded-pill btn-sm btn-primary" id="btn_date_filter">Submit</button>
+                </form>
+              </div>
+        
               <div class="col-md-3">
-                  Payment Status Filter 
-                </label>
-                
+                <label for="basic-url" class="form-label">&nbsp;</label>
                 <div class="input-group">
                   <form action="{{ route('admin.booking') }}" method="GET">
-                    
                     <input type="hidden" class="form-control" id="payment_status" name="payment_status"
                       required readonly value="{{ $payment_filter ?? '1' }}" />
-                      
-                    <button type="submit" class="btn btn-primary" id="btn_payment_filter">
-                      <i class="bi bi-files"></i>Show All 
-                    
-                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary rounded-pill" id="btn_payment_filter">Show inc Failed</button>
                   </form>
                 </div>
               </div>
+
               <div class="col-md-3">
-                <label for="basic-url" class="form-label">
-                  &nbsp;
-                </label>
+                <label for="basic-url" class="form-label">&nbsp;</label>
                 <div class="input-group">
                   <form action="{{ route('admin.booking.sendMail') }}" method="GET">
                     <input type="hidden" class="form-control" id="btn_send_mail_date_filter" name="btn_send_mail_date_filter"
                       required readonly value="{{ $date_filter ?? '' }}" />
-                    <button type="submit" class="btn btn-primary" id="btn_send_mail">
-                      <i class="bi bi-files"></i> Send To Admin
-                    </button>
-                  </form>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <label for="basic-url" class="form-label">
-                  &nbsp;
-                </label>
-                <div class="input-group">
-                  <form action="{{ route('admin.booking.cakeOrders') }}" method="GET">
-                    <input type="hidden" class="form-control" id="view_cake_order_date_filter" name="view_cake_order_date_filter"
-                      required readonly value="{{ $date_filter ?? '' }}" />
-                    <button type="submit" class="btn btn-primary" id="btn_view_cake_order">
-                      <i class="bi bi-files"></i> View Cake Order
-                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary rounded-pill" id="btn_send_mail">Send 2 Admin</button>
                   </form>
                 </div>
               </div>
               
-             <!-- View Today Booking Start -->
-               <div class="col-md-3">
-                <label for="basic-url" class="form-label">
-                  &nbsp;
-                </label>
-                <div class="input-group">
-                  <form action="{{ route('admin.booking.todayBooking') }}" method="GET">
-                    <input type="hidden" class="form-control" id="view_Today_date_filter" name="view_today_booking_date_filter"
-                      required readonly value="{{ $date_filter ?? '' }}" />
-                    <button type="submit" class="btn btn-primary" id="btn_view_today_booking">
-                      <i class="bi bi-files"></i> View Today Booking
-                    </button>
-                  </form>
+                <div class="col-md-3">
+                  <label for="basic-url" class="form-label">&nbsp;</label>
+                  <div class="input-group">
+                	<form action="{{ route('admin.booking.cakeOrders') }}" method="GET">
+                	  <input type="hidden" class="form-control" id="view_cake_order_date_filter" name="view_cake_order_date_filter"
+                		required readonly value="{{ $date_filter ?? '' }}" />
+                	  <button type="submit" class="btn btn-sm btn-primary rounded-pill" id="btn_view_cake_order">View Cake Order</button>
+                	</form>
+                  </div>
                 </div>
-              </div>
-              
-            <!-- View Today Booking End -->
+                <!-- View Today Booking Start -->
+                <div class="col-md-3">
+                  <label for="basic-url" class="form-label">&nbsp;</label>
+                  <div class="input-group">
+                	<form action="{{ route('admin.booking.todayBooking') }}" method="GET">
+                	  <input type="hidden" class="form-control" id="view_Today_date_filter" name="view_today_booking_date_filter"
+                		required readonly value="{{ $date_filter ?? '' }}" />
+                	  <button type="submit" class="btn btn-sm btn-primary rounded-pill" id="btn_view_today_booking"> View Today Booking</button>
+                	</form>
+                  </div>
+                </div>
             </div>
+            </div>
+            <!-- Filter Area -->
+        </div>
+        
+    <!-- /.card-header -->
+    
             <br>
             @include('includes.inc_booking_table')
           </div> <!-- /.card-body -->

@@ -215,13 +215,20 @@ class homeController extends Controller
 
   public function gallery()
   {
-    $data['theatres'] = $theatres = theatre::with('theatre_assets')->get()->map(function ($theatre) {
-      $theatre->theatre_assets->transform(function ($carousel) {
+      
+    $data['theatres'] = $theatres = 
+    theatre::with('theatre_assets')->get()->map(function ($theatre) 
+    {
+      $theatre->theatre_assets->transform(function ($carousel) 
+      {
         $carousel->image_url = URL::asset('assets/img/' . $carousel->foldername . '/' . $carousel->filename);
         return $carousel;
-      });
+      }
+      
+    );
       return $theatre;
     });
+    
     return view('gallery', $data);
   }
 }

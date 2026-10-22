@@ -1,22 +1,70 @@
 @extends('includes.layout')
-@section('title','Terms')
+
+@section('title','Private Theaters for Celebration and Surprises')
+@section('keyword','private theater, private theater in Marathahalli, private movie theater, mini theater, mini party hall, party venue, celebration venue, birthday celebration, birthday parties, surprise birthday celebration, kids birthday party, first birthday, children’s birthday, baby birthday venues, baby shower halls, bride-to-be celebration, bachelorette party, mom-to-be celebration, hosting baby birthday, small get-togethers, group party, place for celebration, party venues and ideas, budget-friendly celebration, birthday places for couples, binge watch party, fun places in Bangalore')
+@section('description','PartyAdda offers private theatre celebrations in Bangalore with customizable packages for birthdays, bride to be, anniversaries, baby shower, mom to be,couples, family gatherings, and special events—fun, memorable, and affordable.')
 @section('content')
-<div class="container">
-    <a href="javascript:void(0)" class="back-btn text-decoration-none mt-5" onclick="goBack()">
-        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true"
-            height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-                clip-rule="evenodd"></path>
-        </svg>
-        Back
-    </a>
+<style>
+    .terms-policy {
+        font-family: 'Montserrat', sans-serif;
+        color: #000;
+    }
+
+    .terms-policy .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 8px;
+        padding: 0;
+        color: inherit;
+        font-size: 14px;
+    }
+
+    .terms-policy .content-head {
+        margin: 12px 0;
+        padding: 0;
+        font-family: inherit;
+        font-size: clamp(20px, 3vw, 26px);
+        line-height: 1.3;
+    }
+
+    .terms-policy .updated-date {
+        margin: 8px 0;
+        padding: 0;
+        font-family: inherit;
+        font-size: 12px;
+    }
+
+    .terms-policy .content-text {
+        margin: 0 0 8px;
+        padding: 0;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .terms-policy .unorder-list {
+        margin: 0 0 12px;
+        padding: 0 0 0 20px;
+    }
+
+    .terms-policy .list-item {
+        margin-bottom: 6px;
+        padding: 0;
+    }
+
+    .terms-policy .list-item:last-child,
+    .terms-policy .list-item:last-child p {
+        margin-bottom: 0;
+    }
+</style>
+<div class="container py-2 terms-policy">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <div class="fs-3 fw-bold my-4"> <p class="content-head">Terms &amp; Conditions</p></div>
+            <h1 class="content-head fw-bold">Terms &amp; Conditions</h1>
                 
     <div class="content-seprater"></div>
-    <p class="updated-date">Last updated on Feb 27th 2024</p>
+    <p class="updated-date">Last updated on Oct 17th 2026</p>
     <p class="content-text">
         For the purpose of these Terms and Conditions, The term "we", "us",
         "our" used anywhere on this page shall mean
@@ -111,11 +159,4 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @endsection
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-    function goBack() {
-  window.history.back()
-}
-</script>

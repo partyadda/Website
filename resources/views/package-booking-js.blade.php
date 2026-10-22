@@ -167,6 +167,7 @@
     
     var theatre = $("input[name='theatre']:checked").val();
     var slotId =  $('#slot_id').val();
+    var slotTime =  $('#slot_time').val();
 
     if(!validateFieldValue(theatre)) {
       errorMessage = 'Please select theatre';
@@ -432,6 +433,7 @@
        
         $.each(slots, function(i, slotData) {             
            var slotId = slotData.slot.id;
+           
            var startTime = slotData.slot.start_time;
            var endTime = slotData.slot.end_time;
            var fullSlotTime = startTime+" - "+endTime;
@@ -439,6 +441,8 @@
            var startTime24 = slotData.slot.start_time_24;
            var endTime24 = slotData.slot.end_time_24;
            var fullSlotTime24 = startTime24+" - "+endTime24;
+
+           var slotTime = fullSlotTime;
 
            var shortDurationPer = slotData.slot.Percentage;
            var shortDurationPer = slotData.slot.Percentage;
@@ -518,7 +522,7 @@
       handleBookingSummary();
 
       var theaterAssets = JSON.parse($('#theatre_span_'+theaterId).text());
-      var imageBaseUrl = '{{ URL::asset('assets/img/') }}';
+      var imageBaseUrl = '{{ URL::asset('assets/img/theatre/') }}';
       var imageCarousel = '';
       var imageCarouselIndiCators = '' 
       $.each(theaterAssets, function(key, item) {
@@ -557,6 +561,7 @@
   $("#time_slot_selection").on("click", '.time_slot_btn', function() {
      var currentBtn = $(this);
      var slotId = $(this).attr('data-time-slot-id');
+     
      var slotTime = $(this).attr('data-time-slot');
 
      $(".time_slot_btn").each(function() {
@@ -566,6 +571,8 @@
        }
      });
      $('#slot_id').val(slotId);
+      
+     $('#slot_time').val(slotTime);
 
      var slotShortDuration = parseInt($(this).attr('data-time-slot-short-duration'));
      $('#slot_short_duration_per').val(slotShortDuration); 
@@ -593,7 +600,6 @@
       $('#decoration-error-alert').hide();
 
       var decorationId = $(this).attr('data-decoration-id');
-      $('#decoration_id').val(decorationId);
 
       var partnerNameLabel = $(this).attr('data-partner-label');
       var yourNameLabel = $(this).attr('data-your-label');
@@ -668,7 +674,7 @@
   function saveCustomerDetails() {
     var customer_name = $('#customer_full_name').val();
     var customer_phno = $('#customer_ph_no').val();
-    var customer_email = '';
+    var where_from = '';
 
     $('#customer-error-alert').hide();
     $('#customer-error-alert').html('');
@@ -691,7 +697,7 @@
         "_token": '{{ csrf_token() }}', 
         "customer_name": customer_name,
         "customer_phno": customer_phno
-        //,"customer_email": customer_email,
+        ,"wherefrom": where_from
       }
     };
 
@@ -808,12 +814,15 @@
     var theaterPackageAmount = parseInt($('#package_amount').val());
 
     var slotShortDuration = parseInt($('#slot_short_duration_per').val());
+    
     if($.isNumeric(slotShortDuration) && slotShortDuration <= 99) {
        theaterPackageAmount = Math.ceil((parseInt(theaterPackageAmount) * parseInt(slotShortDuration)) / 100);
     }
 
+    $('.pkg_branch_theatre').html('Package: ' + $('#package_name').val() + '</br>Branch: ' + $('#branch_name').val() + '</br> Date: ' + $('#slot_date').val() + ' </br> Time: '+ $('#slot_time').val() );
+    
     $('.pkg_base_price').text(theaterPackageAmount);
-
+    
     var extraGuestTotalAmount = 0;
     var noOfGuest = parseInt($('#no_of_guest').val());
     var allowedGuest = parseInt($('#allowed_no_of_guest').val());
@@ -829,6 +838,8 @@
       $('#pkg_extra_guest_price').html('Extra Person Charges <small>('+extraGuestCount+'X'+extraGuestAmount+')</small>');
       $('.pkg_extra_guest_price').text(extraGuestTotalAmount);
     }
+
+    var theatreid = $('#theatre_id').val();
 
     var cakeId = $('#cake_id').val();
     var cakeExtraAmount = 0;

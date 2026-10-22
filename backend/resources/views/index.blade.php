@@ -24,11 +24,11 @@
                     <div class="row">
                         <div class="col-6 d-inline-flex align-items-center">
                             <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> <label class="form-check-label" for="flexCheckDefault">
-                                    Remember Me
+                                    Remember
                                 </label> </div>
                         </div> <!-- /.col -->
                         <div class="col-6">
-                            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Get Me Access</button> </div>
+                            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Login</button> </div>
                         </div> <!-- /.col -->
                     </div> <!--end::Row-->
                 </form>

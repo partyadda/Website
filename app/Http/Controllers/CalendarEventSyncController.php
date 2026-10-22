@@ -78,12 +78,13 @@ class CalendarEventSyncController extends Controller
     $data['errorData'] = $errorData;
 
     //echo json_encode($data);
-    return view('cal_event_result', $data);
+    return view('calendar_event_manage', $data);
   }
 
   function getBookingCalendarEventArray()
   {
-    $startDate = date('Y-m-d', strtotime('2024-12-15'));
+    $startDate = date('Y-m-d', strtotime('2025-12-01'));
+    //$startDate = date('Y-m-d', strtotime('2025-04-25'));
 
     $bookings = Booking::with(['customer', 'theatre.branchs', 'cake', 'slot', 'decoration', 'payment', 'addons.addon'])->where('date', '>=', $startDate)->where('booking_status', '=', 1)->whereNull('cal_event_id')->orderByDesc('date')->get();
 
@@ -101,7 +102,7 @@ class CalendarEventSyncController extends Controller
     foreach ($bookings as $book) {
       $calendarEvent = array();
 
-      $calendarEvent['summary'] = $book->decoration->name . " - " . $book->theatre->name . " Theatre";
+      $calendarEvent['summary'] = ($book->decoration->name ?? "") . " - " . $book->theatre->name . " Theatre";
       $calendarEvent['location'] = $book->theatre->name . "," . $book->theatre->branchs->branch_name;
       $calendarEvent['description'] = $htmlData = view('cal_event_detail', compact('book'))->render();
 

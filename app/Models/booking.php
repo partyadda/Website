@@ -9,6 +9,8 @@ class booking extends Model
 {
   protected $table = 'booking';
 
+  protected $guarded = ['id'];
+
   public function customer()
   {
     return $this->belongsTo(customer::class, 'customer_id', 'id');
@@ -42,5 +44,15 @@ class booking extends Model
   public function payment()
   {
     return $this->hasOne(payment::class, 'bookingid');
+  }
+
+  public function package()
+  {
+    return $this->belongsTo(Package::class, 'package_id', 'id');
+  }
+
+  public function billing()
+  {
+    return $this->hasOne(BookingBilling::class, 'booking_id');
   }
 }

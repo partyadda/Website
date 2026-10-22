@@ -30,9 +30,11 @@ class reportController extends Controller
   public function index()
   {
     $dateRangeFilter = null;
+    
     if (request()->has('booking_date_filter')) {
       $dateRangeFilter = request()->input('booking_date_filter');
     }
+    
     $getFilterDates = $this->getFilterDates($dateRangeFilter);
     $startDate = $getFilterDates[0];
     $endDate =  $getFilterDates[1];
@@ -67,6 +69,7 @@ class reportController extends Controller
   public function send_bookings_to_admin()
   {
     $dateRangeFilter = null;
+    $SendMail = null;
     if (request()->has('btn_send_mail_date_filter')) {
       $dateRangeFilter = request()->input('btn_send_mail_date_filter');
     }
@@ -80,15 +83,12 @@ class reportController extends Controller
     $emailSubject = "Booking Details From - " . $dateRange;
 
     try {
-      //"info@partyadda.com", "kris.vd@gmail.com"
-
-    $this->helper->sendAdminMail(array("info@partyadda.com", "partyadda.37@gmail.com"), $emailSubject, $htmlData);
-
-      //$this->helper->sendAdminMail(array($booking->theatre->branchs->email),  $emailSubject, $htmlData);
+      $this->helper->sendAdminMail(array("partyadda.76@gmail.com", "partyadda.37@gmail.com"),$emailSubject, $htmlData);
+      
     } catch (\Exception $e) {
     }
 
-    return redirect()->back()->with('success', 'Mail Sent Successfully');
+    return redirect()->back()->with('success', 'Mail Sent Successfully to partyadda.76@gmail.com and partyadda.37@gmail.com');
   }
 
   public function view_cake_orders()
@@ -119,16 +119,12 @@ class reportController extends Controller
       $emailSubject = "Cake_Order Details From - " . $dateRange;
 
       try {
-        //"info@partyadda.com", "kris.vd@gmail.com"
-        //  $this->helper->sendAdminMail(array("info@partyadda.com", "kris.vd@gmail.com"), $emailSubject, $htmlData);
-
-            $this->helper->sendAdminMail(array("info@partyadda.com", "partyadda.37@gmail.com"), $emailSubject, $htmlData);
-
-
-   //     $this->helper->sendAdminMail(array($booking->theatre->branchs->email), null, $htmlData);
+      
+        $this->helper->sendAdminMail(array("partyadda.76@gmail.com", "partyadda.37@gmail.com"), $emailSubject, $htmlData);
+   
       } catch (\Exception $e) {
       }
-      return redirect()->back()->with('success', 'Mail Sent Successfully');
+      return redirect()->back()->with('success', 'Mail Sent Successfully to partyadda.76@gmail.com and partyadda.37@gmail.com"');
     } else {
       $booking = $this->getBookingDetails("CAKE_ORDER", $dateRangeFilter);
 

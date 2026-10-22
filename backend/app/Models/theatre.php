@@ -62,7 +62,7 @@ class theatre extends Model
 
   public function packages()
   {
-    return $this->hasMany(Package::class, 'theatre_id', 'id')->where(['active' => 1]);
+    return $this->hasMany(Package::class, 'theatre_id', 'id');
   }
 
   // public function slots()
